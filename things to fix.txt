@@ -1,0 +1,200 @@
+//payment
+//registration
+result view page [single]
+//fix the database issue regarding section and term
+design the userresult checker view page
+staff registration page
+change the login page to use student id instead of email
+add vector image to the admission page and any other important page like the paymentsuccess
+make all the examSet page look like examSetBoth page
+when the admin update calender it should send email to everystudent tell them about it
+
+calculate the average result and input it on a table
+promotion with average
+make the result single page calculate all the result for a single person and put on a single page
+fit the timezone problem in user.exam.blade.php
+user should be able to see their admission letter and also an email should be sent for to tell them of their admission status and possibly a login link
+//admin invoice view
+to be able to read profile pic from database
+update of profile from admin point of view
+//add a function that make sure only one type of subject exsist for each class
+courselesson.blade.php edit part
+//add a delete function to the coursematerial and courselesson view tab
+edit the examset.blade to filter items with different class
+//make the create subject page on the admin side to be in table and modal format to be able to view, add and delete with ease
+add count to the list of question teachers can set
+add a function that shows all the lesson material and lesson note on the management.blade.php page
+to be able to view uploaded lesson material both on the teacher and user data
+create a middleware that verfiy any registered teacher
+//make it that after the pays for RegPage his current class update
+//customize the unpaid pages
+//student and teacher update on the admin side
+add the attenance calculator for the student and also update the result calculator 
+make is sure that is when the admin trys to start a new term that the result calculator page will start a new
+
+when you are done change most of the icons used
+printable list of student for a particular class
+the time and date counter for the assignment and exam module
+fix the assignment mark stuff
+
+-- the paid and unpaid pages on the admin dashboard
+-- both invoice view pages on the admin and user dashboard
+
+
+THE HOME DASHBOARD FOR THE STUDENT DASHBOARD
+- shows a notification for any new course material and course lesson uploaded
+- after any exam will be written
+
+
+
+ALWAYS NOTE TO CHANGE THE CALLBACK URL FOR THE PAYMENT FORMS
+
+
+EXAM MODULE
+- make the 
+
+IMPORTANT THINGS
+admin side
+- add a promotion page, that has the following requirement in the student SM
+---- current session, promote session, promotion from class, promotion to class
+- the exam page will have a grade requirement
+- an addmission page to see all that recently apply at the school and [we should add an update the profile page of the user so that after the user register he will still add some details like religion, address etc]
+----and should be able to accept and reject addmission application
+- an term and section update
+- if a student is been given admission it should show on the use email 
+
+
+teacher side
+- for all assigned subject the teacher can divide into different part(lesson) by his own will
+---- after this the teacher can add course materials to aid the subject learn better either pdf, videos, pictures etc
+- 
+
+RESULT MANAGEMENT
+
+the exam tab should have a limit to set questions so that calculating result will be easiler [do the same for the assignment & test module]
+
+	the exam contains 70 -marks
+	the assignment contains 10 -marks
+	the test contains 20 -marks
+	the attendance decide if the student will be allowed to take exam
+
+TABLES AND COLUMS TO BE CREATED
+- exam score
+	-- student_name
+	-- subject_name
+	-- class
+	-- section
+	-- term
+	-- score
+
+- assignment score
+	-- student_name
+	-- subject_name
+	-- class
+	-- section
+	-- term
+	-- score
+
+- test score
+	-- student_name
+	-- subject_name
+	-- class
+	-- section
+	-- term
+	-- score
+
+
+in the admin side their will be button to calculate all result, when this button is hit all the exam, assignment
+& test score for each indivdual will be calculate and added in the result datatable 
+
+- 
+
+
+
+
+
+	-- student_name
+	-- subject_name
+	-- class
+	-- section
+	-- term
+	-- exam_score
+	-- test_score
+	-- assignment_score
+	-- attendance record
+	-- total score
+	-- average[maybe]
+
+when the button click it collect all the data from the exam, test and assignment table and insert them into the 
+result table respectively
+	first it collect from the exam table and then as it collect from the test and assignment table it update
+	the column via the user name.
+
+RAW EXPRESSION OF THE CODE
+	(once the result button is click)
+
+	$exam = DB::table(exam_score)->get();
+	foreach($exam as $exam){
+		$result = new Result;
+		
+		[ $student = $exam->student_name;
+		$subject = $exam->subject
+		$class= $exam->class;
+		$section = $exam->section;
+		$term = $exam->term;
+		$exam_score = $exam->exam_score;] write the correct code
+		
+		$result->save();
+
+		$test = DB::table(test_score)->get();
+		foreach($test as $test){
+			$result = new Result;
+		
+			[ $student = $result->student_name;
+			$subject = $result->subject
+			$class= $result->class;
+			$section = $result->section;
+			$term = $result->term;
+			$test_score = $result->test_score;] write the correct code
+	
+			DB::table(result)->where(['student_name' => $student], ['section'] => $section)->update(
+				['test_score' => $test_score],	
+			);
+
+			$assignment = DB::table(assignment_score)->get();
+			foreach($test as $test){
+				$result = new Result;
+		
+				[ $student = $assignment->student_name;
+				$subject = $assignment->subject
+				$class= $assignment->class;
+				$section = $assignment->section;
+				$term = $assignment->term;
+				$test_score = $assignment->test_score;] write the correct code
+	
+				DB::table(result)->where(['student_name' => $student], ['section' => $section])->update(
+					['assigment_score' => $assigment_score],	
+				);
+
+
+		    	}
+		}
+	}
+
+	[in case the above does not work try seperating it from the foreach loop]
+
+	$calculate = DB::table(result)->get();
+	foreach ($calculate as $calculate)	
+	{
+		$result = new Result;
+		
+		$student = $result->student;
+		$subject = $result->subject
+		$class= $result->lass;
+		$section = $result->section;
+		$term = $result->term;
+		$exam = $result->exam_score;
+		$test = $result->test_score;
+		$assignment = $result-assignment_score;	
+	}
+

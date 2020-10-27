@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        @include('layouts.shared.title-meta', ['title' => "Register & Signup"])
+
+        @include('layouts.shared.head-css')
+        
+    <link href="{{asset('assets/libs/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/dropify/dropify.min.css')}}" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body class="authentication-bg authentication-bg-pattern">
+
+        <div class="account-pages mt-5 mb-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card bg-pattern">
+
+                            <div class="card-body p-4">
+                                
+                                <div class="text-center w-75 m-auto">
+                                    <div class="auth-logo">
+                                        <a href="" class="logo logo-dark text-center">
+                                            <span class="logo-lg">
+                                                <img src="{{asset('assets/images/logo-dark.png')}}" alt="" height="22">
+                                            </span>
+                                        </a>
+                    
+                                        <a href="" class="logo logo-light text-center">
+                                            <span class="logo-lg">
+                                                <img src="{{asset('assets/images/logo-light.png')}}" alt="" height="22">
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <p class="text-muted mb-4 mt-3">Don't have an account? Create your account, it takes less than a minute</p>
+                                </div>
+
+                        <form method="post" role="form" action="{{ route('register') }}" enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="form-group{{ $errors->has('fullname') ? ' has-danger' : '' }}">
+                                <label for="fullname"> {{ __('Fullname')}} </label>
+                                <input autocomplete="off" class="form-control{{ $errors->has('fullname') ? ' is-invalid' : '' }}" placeholder="{{ __('Full Name') }}" type="text" name="fullname" value="{{ old('fullname') }}"  autofocus>
+                                @if ($errors->has('name'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('fullname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                <label for="email"> {{ __('Email')}} </label>
+                                <input autocomplete="off" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" type="email" name="email" value="{{ old('email') }}" >
+                                @if ($errors->has('email'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group{{ $errors->has('dob') ? ' has-danger' : '' }}">
+                                <label for="dob"> {{ __('Date Of Birth') }} </label>
+                                <input autocomplete="off" class="form-control{{ $errors->has('dob') ? ' is-invalid' : '' }}" placeholder="{{ __('Date Of Birth') }}" type="date" name="dob" value="{{ old('dob') }}" >
+                                @if ($errors->has('dob'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('dob') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            
+                            <div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
+                            <label for="example-number-input" class="form-control-label">{{ __('Gender') }}</label><br>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="customRadioInline1" name="gender" class="custom-control-input" value="Male">
+                                    <label class="custom-control-label" for="customRadioInline1">Male</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="customRadioInline2" name="gender" class="custom-control-input" value="Female">
+                                    <label class="custom-control-label" for="customRadioInline2">Female</label>
+                                </div>
+                                @if ($errors->has('gender'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('gender') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+
+                            <div class="form-group{{ $errors->has('class') ? ' has-danger' : '' }}">
+                                    <label for="entry_class"> {{ __('Entry Class')}} </label>
+                                    <select name="class" id="" class="form-control{{ $errors->has('class') ? ' is-invalid' : '' }}" value="{{ old('entry_class') }}">
+                                        <option value="">-Entry Class-</option>
+                                        <option value="JSS1">JSS1</option>
+                                        <option value="JSS2">JSS2</option>
+                                        <option value="JSS3">JSS3</option>
+                                        <option value="SS1">SS1</option>
+                                        <option value="SS2">SS2</option>
+                                        <option value="SS3">SS3</option>
+                                    </select>
+                                @if ($errors->has('class'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('class') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+
+                            <div class="form-group{{ $errors->has('guardian_name') ? ' has-danger' : '' }}">
+                                <label for="guardian_name">{{ __('Guardian Name') }}</label>
+                                <input autocomplete="off" class="form-control{{ $errors->has('guardian_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Guardian Name') }}" type="text" name="guardian_name" value="{{ old('guardian_name') }}"  autofocus>
+                                @if ($errors->has('guardian_name'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('guardian_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+
+                            <div class="form-group{{ $errors->has('guardian_email') ? ' has-danger' : '' }}">
+                            <label for="guardian_name">{{ __('Guardian Email') }}</label>
+                                <input autocomplete="off" class="form-control{{ $errors->has('guardian_email') ? ' is-invalid' : '' }}" placeholder="{{ __('Guardian Email') }}" type="email" name="guardian_email" value="{{ old('guardian_email') }}" >
+                                @if ($errors->has('guardian_email'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('guardian_email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+
+                            <div class="form-group{{ $errors->has('guardian_phoneNumber') ? ' has-danger' : '' }}">
+                                <label>{{ __('Guardian Phone Number') }}</label>
+                                <input type="text" class="form-control" data-toggle="input-mask" data-mask-format="(000) 000-0000-000" placeholder="(234) 123-4567-890" name="guardian_phoneNumber" value="{{ old('guardian_phoneNumber') }}">
+                                
+                                @if ($errors->has('guardian_phoneNumber'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('guardian_phoneNumber') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+
+
+                            <div class="form-group{{ $errors->has('passport') ? ' has-danger' : '' }}">
+                                <label for="">Upload Passport</label>
+                                <input type="file" data-plugins="dropify" name="passport"  value="{{ old('passport') }}"/>                           
+                                @if ($errors->has('passport'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('passport') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                         
+                            <div class="form-group{{ $errors->has('manuscript') ? ' has-danger' : '' }}">
+                                <label for="">Upload Manuscript</label>
+                                <input type="file" data-plugins="dropify"  name="manuscript"  value="{{ old('manuscript') }}"/>   
+                                
+                                @if ($errors->has('manuscript'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('manuscript') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+
+
+                            <input type="hidden" name="role" value="STUDENT">
+
+                            
+                            <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                               <label for="password">{{ __('Password') }}</label>
+                                <div  class="input-group input-group-merge">
+                                    <input autocomplete="off" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Password') }}" type="password" name="password" >
+                                    <div class="input-group-append" data-password="false">
+                                        <div class="input-group-text">
+                                            <span class="password-eye"></span>
+                                        </div>
+                                    </div>
+                                    @if ($errors->has('password'))                                 
+                                        <span class="invalid-feedback" style="display: block;" role="alert">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                    @endif            
+                                </div>                    
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirm_password"> {{__('Confirm Password')}} </label>
+                                <div  class="input-group input-group-merge">
+                                    <input autocomplete="off" class="form-control" placeholder="{{ __('Confirm Password') }}" type="password" name="password_confirmation">
+                                    <div class="input-group-append" data-password="false">
+                                        <div class="input-group-text">
+                                            <span class="password-eye"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row my-4">
+                                <div class="col-12">
+                                    <div class="custom-control custom-control-alternative custom-checkbox">
+                                        <input class="custom-control-input" id="customCheckRegister" type="checkbox" required>
+                                        <label class="custom-control-label" for="customCheckRegister">
+                                            <span class="text-muted">{{ __('I agree with the') }} <a href="#!">{{ __('Privacy Policy') }}</a></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary mt-4">{{ __('Procced To Payment') }}</button>
+                            </div>
+                        </form>
+
+                                
+
+                            </div> <!-- end card-body -->
+                        </div>
+                        <!-- end card -->
+
+                        <div class="row mt-3">
+                            <div class="col-12 text-center">
+                                <p class="text-white-50">Already have account?  <a href="{{route('login')}}" class="text-white ml-1"><b>Sign In</b></a></p>
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                    </div> <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end page -->
+
+        <footer class="footer footer-alt">
+            <script>document.write(new Date().getFullYear())</script> &copy; UBold theme by <a href="" class="text-white-50">Coderthemes</a> 
+        </footer>
+
+        @include('layouts.shared.footer-script')
+
+      
+            <!-- Plugins js-->
+            <script src="{{asset('assets/libs/jquery-mask-plugin/jquery-mask-plugin.min.js')}}"></script>
+            <script src="{{asset('assets/libs/autonumeric/autonumeric.min.js')}}"></script>
+
+            <!-- Page js-->
+            <script src="{{asset('assets/js/pages/form-masks.init.js')}}"></script>
+
+              <!-- Plugins js-->
+            <script src="{{asset('assets/libs/dropzone/dropzone.min.js')}}"></script>
+            <script src="{{asset('assets/libs/dropify/dropify.min.js')}}"></script>
+
+            <!-- Page js-->
+            <script src="{{asset('assets/js/pages/form-fileuploads.init.js')}}"></script>
+            
+    </body>
+</html>
