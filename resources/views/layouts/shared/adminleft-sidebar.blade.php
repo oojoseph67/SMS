@@ -41,7 +41,7 @@
                     <div class="collapse" id="sidebarEcommerce">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="">Time Table</a>
+                                <a href="{{ route('timetable') }}">Time Table</a>
                             </li>
                             <li>
                                 <a href="#sidebarMultilevel3" data-toggle="collapse">

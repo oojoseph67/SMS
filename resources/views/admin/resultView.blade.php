@@ -1,4 +1,4 @@
-@extends('layouts.adminvertical', ['title' => 'Result View'])
+@extends('layouts.adminvertical', ['title' => 'Result'])
 
 @section('css')
  
@@ -57,7 +57,7 @@
                                 <tr>
                                     <th scope="row">00{{$result->id}}</th>
                                     <td>{{$result->fullname}}</td>
-                                    <td>{{$result->class}}</td>
+                                    <td>{{$result->current_class}}</td>
                                     <td>{{$result->section}}</td>
                                     <td>{{$result->term}}</td>
                                     <td>                            
@@ -75,7 +75,8 @@
                                             </div>
                                             <div class="col-auto">
                                                 <!-- Button -->
-                                                <a href="{{  route('result.single', ['id' => $result->id])  }}" class="btn btn-link btn-lg text-muted">
+                                                {{ csrf_field() }}
+                                                <a href="{{  route('result.single', ['fullname' => $result->fullname, 'section' => $result->section])  }}" target="_blank"  class="btn btn-link btn-lg text-muted">
                                                     <i class="dripicons-download"></i>
                                                 </a>
                                             </div>

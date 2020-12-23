@@ -67,8 +67,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 	Route::get('/result', 'AdminPageController@result')->name('result');
 	Route::view('/result/calculator', 'admin.resultCalculator')->name('result.calculator');
 	Route::get('/result/calculate', 'AdminPageController@resultCalculate')->name('calculate.result');
-	Route::get('check/result', 'AdminPageController@checkResult')->name('check.result');
-	Route::get('/result/single/{id}', 'AdminPageController@resultSingle')->name('result.single');
+	Route::get('/check/result', 'AdminPageController@checkResult')->name('check.result');
+	Route::get('/result/single/{fullname}', 'AdminPageController@resultSingle')->name('result.single');
 	Route::view('/calender', 'admin.calender')->name('calender');
 	Route::view('/calender/update/term', 'admin.calenderUpdateTerm')->name('calender.updateTerm');
 	Route::get('/calender/update', 'AdminPageController@calenderUpdateTermAction')->name('calender.updateTermAction');
@@ -80,6 +80,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 	Route::get('/promote/ss1', 'AdminPageController@promoteSS1')->name('promote.ss1');
 	Route::get('/promote/ss2', 'AdminPageController@promoteSS2')->name('promote.ss2');
 	Route::get('/promote/ss3', 'AdminPageController@promoteSS3')->name('promote.ss3');
+	Route::get('/timetable', 'AdminPageController@timetable')->name('timetable');
+	Route::get('/timetable/edit', 'AdminPageController@timetableEdit')->name('timetable.edit');
 });
 
 Route::group(['middleware' => ['auth', 'teacher'], 'prefix' => '/teacher'], function (){
@@ -104,7 +106,7 @@ Route::group(['middleware' => ['auth', 'teacher'], 'prefix' => '/teacher'], func
 	Route::get('/exam/create/both', 'TeacherPageController@examCreateBoth')->name('exam.createBoth');
 	Route::get('/exam/set/obj/{subject_name}', 'TeacherPageController@examSetObj')->name('set.examObj');
 	Route::get('/exam/set/theory/{subject_name}', 'TeacherPageController@examSetTheory')->name('set.examTheory');
-	Route::get('/exam/set/both/{subject_name}', 'TeacherPageController@examSetBoth')->name('set.examBoth');
+	Route::get('/exam/set/both/{subject_name}', 'TeacherPageController@examSetBoth')->name('set.examBoth');                      
 	Route::get('/examaction', 'TeacherPageController@examAction')->name('exam.action');
 	Route::get('/examaction/theory', 'TeacherPageController@examActionTheory')->name('exam.actionTheory');
 	Route::get('/examaction/both', 'TeacherPageController@examActionBoth')->name('exam.actionBoth');
@@ -170,4 +172,8 @@ Route::get('/payment/callback/reg', 'PaymentController@handleGatewayCallbackReg'
 Route::get('/payment/callback/lesson', 'PaymentController@handleGatewayCallbackLesson')->name('callback.lesson');
 
 Route::get('/regPage', 'StudentPage@regPayment')->name('reg.payment.page');
+
+Route::view('/teacher-reg', 'teacher.reg')->name('teacher.reg');
+
+Route::post('/teacher-reg-process', 'RegisterIntoSMS@staff')->name('register.teacher');
 

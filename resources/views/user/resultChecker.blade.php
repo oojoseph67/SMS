@@ -38,6 +38,8 @@
                             <form action="{{ route('result.checkerProcess') }}">
                                 {{ csrf_field() }}
 
+                                <h1>Current Class {{auth()->user()->current_class}}</h1>
+
                                 <div class="form-group">
                                     <label for="">Select Section</label>
                                     <select name="section" id="" class="form-control" required>
@@ -59,7 +61,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="btn btn-primary">Check</button>
+                                    <button class="btn btn-primary" target="_blank">Check</button>
                                 </div>
 
                             </form>     

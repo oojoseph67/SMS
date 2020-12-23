@@ -289,9 +289,7 @@
                             @endif
                         @endforeach
 
-                        @foreach($done as $done)
-                            <h1>Promotion for this section has been compeleted</h1>
-                        @endforeach
+                        <!--  -->
 
                     </div> <!-- end card body-->
                 </div> <!-- end card -->

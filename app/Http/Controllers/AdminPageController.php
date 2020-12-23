@@ -16,6 +16,7 @@ use App\TestScore;
 use App\AssignmentScore;
 use App\ExamScore;
 use App\ResultAverage;
+use App\TimeTable;
 
 class AdminPageController extends Controller
 {
@@ -530,15 +531,36 @@ class AdminPageController extends Controller
         $section = $request->input('section');
         $term = $request->input('term');
 
-        $result = DB::table('results')->where(['class' => $class], ['section' => $section], ['term' => $term])->distinct('fullname')->get();
-
+        $result = DB::table('users')->where(
+            'current_class', $class
+        )->where(
+            'section' , $section 
+        )->where(
+            'term' , $term
+        )->distinct(
+            'section'
+        )->get();
         return view('admin.resultView',[
             'result' => $result
         ]);
     }
 
-    public function resultSingle($id){
-        return 123;
+    public function resultSingle($fullname){
+
+        $section = Auth::user()->section;
+        $term = Auth::user()->user;
+        
+        
+        $details = DB::table('results')->where(
+           'fullname' , $fullname
+        )->where(
+            'section' , $section
+        )->get();
+
+        return view('admin.resultShow',[
+            'details' => $details,
+            'fullname' => $fullname
+        ]);
     }
 
     public function calenderUpdateTermAction(Request $request)
@@ -575,7 +597,7 @@ class AdminPageController extends Controller
         $ss1 = DB::table('promotions')->where(['class' => 'SS1'])->where(['section' => $section])->get();
         $ss2 = DB::table('promotions')->where(['class' => 'SS2'])->where(['section' => $section])->get();
         $ss3 = DB::table('promotions')->where(['class' => 'SS3'])->where(['section' => $section])->get();
-        $done = DB::table('promotions')->where(['promotion_status' => 'DONE'])->where(['section' => $section])->exisit(all());
+       // $done = DB::table('promotions')->where(['promotion_status' => 'DONE'])->where(['section' => $section])->exisit(all());
         return view('admin.calenderUpdate',[
             'jss1' => $jss1,
             'jss2' => $jss2,
@@ -583,7 +605,7 @@ class AdminPageController extends Controller
             'ss1' => $ss1,
             'ss2' => $ss2,
             'ss3' => $ss3,
-            'done' => $done,
+           // 'done' => $done,
         ]);
     }
 
@@ -633,69 +655,30 @@ class AdminPageController extends Controller
 
     public function promoteJSS1(Request $request)
     {
-        $jss1 = $request->input('jss1');
-        
-        $section = Auth::user()->section;
-        $term = Auth::user()->section;
-
-        $result = DB::table('result_averages')->where(['section' => $section], ['term' => $term])->get();
-        foreach($result as $result)
-        {
-            $average = $result->average;
-            if($average >= 50)
-            {
                 DB::table('users')->where('current_class', 'JSS1')->update(
                     ['current_class' => 'JSS2',
                      'promotion_class' => 'JSS2'
                     ]
-                );                
-            }
-            else{
-                DB::table('users')->where('current_class', 'JSS1')->update(
-                    ['current_class' => 'JSS1',
-                     'promotion_class' => 'JSS1'
-                    ]
                 );
-            }
-        }
-
+           
         DB::table('promotions')->where('class', 'JSS1')->update(
             ['promotion_status' => 'DONE']
         );
 
        
 
-        return back()->withJssone(__('The promotion for '. $jss1. ' was successfully'));
+        return back()->withJssone(__('The promotion for jss1 was successfully'));
        
     }
 
     public function promoteJSS2(Request $request)
     {
-        $jss2 = $request->input('jss2');
-        
-        $section = Auth::user()->section;
-        $term = Auth::user()->section;
-
-        $result = DB::table('result_averages')->where(['section' => $section], ['term' => $term])->get();
-        foreach($result as $result)
-        {
-            $average = $result->average;
-            if($average >= 50)
-            {
                 DB::table('users')->where('current_class', 'JSS2')->update(
                     ['current_class' => 'JSS3',
                      'promotion_class' => 'JSS3'
                     ]
-                );                
-            }
-            else{
-                DB::table('users')->where('current_class', 'JSS2')->update(
-                    ['current_class' => 'JSS2',
-                     'promotion_class' => 'JSS2'
-                    ]
                 );
-            }
-        }
+
 
         DB::table('promotions')->where('class', 'JSS2')->update(
             ['promotion_status' => 'DONE']
@@ -703,38 +686,19 @@ class AdminPageController extends Controller
 
        
 
-        return back()->withJssone(__('The promotion for '. $jss2. ' was successfully'));
+        return back()->withJssone(__('The promotion for jss2 was successfully'));
        
     }
 
 
     public function promoteJSS3(Request $request)
     {
-        $jss3 = $request->input('jss3');
-        
-        $section = Auth::user()->section;
-        $term = Auth::user()->section;
-
-        $result = DB::table('result_averages')->where(['section' => $section], ['term' => $term])->get();
-        foreach($result as $result)
-        {
-            $average = $result->average;
-            if($average >= '50')
-            {
                 DB::table('users')->where('current_class', 'JSS3')->update(
-                    ['current_class' => 'JSS2',
-                     'promotion_class' => 'JSS2'
-                    ]
-                );                
-            }
-            else{
-                DB::table('users')->where('current_class', 'JSS3')->update(
-                    ['current_class' => 'JSS3',
-                     'promotion_class' => 'JSS3'
+                    ['current_class' => 'SS1',
+                     'promotion_class' => 'SS1'
                     ]
                 );
-            }
-        }
+          
 
         DB::table('promotions')->where('class', 'JSS3')->update(
             ['promotion_status' => 'DONE']
@@ -742,38 +706,20 @@ class AdminPageController extends Controller
 
        
 
-        return back()->withJssone(__('The promotion for '. $jss3. ' was successfully'));
+        return back()->withJssone(__('The promotion for jss3 was successfully'));
        
     }
 
 
     public function promoteSS1(Request $request)
     {
-        $ss1 = $request->input('ss1');
-        
-        $section = Auth::user()->section;
-        $term = Auth::user()->section;
-
-        $result = DB::table('result_averages')->where(['section' => $section], ['term' => $term])->get();
-        foreach($result as $result)
-        {
-            $average = $result->average;
-            if($average >= 50)
-            {
+       
                 DB::table('users')->where('current_class', 'SS1')->update(
                     ['current_class' => 'SS2',
                      'promotion_class' => 'SS2'
                     ]
-                );                
-            }
-            else{
-                DB::table('users')->where('current_class', 'SS1')->update(
-                    ['current_class' => 'SS1',
-                     'promotion_class' => 'SS1'
-                    ]
                 );
-            }
-        }
+          
 
         DB::table('promotions')->where('class', 'SS1')->update(
             ['promotion_status' => 'DONE']
@@ -781,38 +727,20 @@ class AdminPageController extends Controller
 
        
 
-        return back()->withJssone(__('The promotion for '. $ss1. ' was successfully'));
+        return back()->withJssone(__('The promotion for SS1 was successfully'));
        
     }
 
 
     public function promoteSS2(Request $request)
     {
-        $ss2 = $request->input('ss2');
         
-        $section = Auth::user()->section;
-        $term = Auth::user()->section;
-
-        $result = DB::table('result_averages')->where(['section' => $section], ['term' => $term])->get();
-        foreach($result as $result)
-        {
-            $average = $result->average;
-            if($average >= 50)
-            {
                 DB::table('users')->where('current_class', 'SS2')->update(
                     ['current_class' => 'SS3',
                      'promotion_class' => 'SS3'
                     ]
-                );                
-            }
-            else{
-                DB::table('users')->where('current_class', 'SS2')->update(
-                    ['current_class' => 'SS2SS1',
-                     'promotion_class' => 'SS2SS1'
-                    ]
                 );
-            }
-        }
+         
 
         DB::table('promotions')->where('class', 'SS2')->update(
             ['promotion_status' => 'DONE']
@@ -820,38 +748,18 @@ class AdminPageController extends Controller
 
        
 
-        return back()->withJssone(__('The promotion for '. $ss2. ' was successfully'));
+        return back()->withJssone(__('The promotion for ss2 was successfully'));
        
     }
 
 
     public function promoteSS3(Request $request)
     {
-        $ss3 = $request->input('ss3');
-        
-        $section = Auth::user()->section;
-        $term = Auth::user()->section;
-
-        $result = DB::table('result_averages')->where(['section' => $section], ['term' => $term])->get();
-        foreach($result as $result)
-        {
-            $average = $result->average;
-            if($average >= '50')
-            {
                 DB::table('users')->where('current_class', 'SS3')->update(
                     ['current_class' => 'FINISH',
                      'promotion_class' => 'FINISH'
                     ]
                 );                
-            }
-            else{
-                DB::table('users')->where('current_class', 'SS3')->update(
-                    ['current_class' => 'SS3',
-                     'promotion_class' => 'SS3'
-                    ]
-                );
-            }
-        }
 
         DB::table('promotions')->where('class', 'SS3')->update(
             ['promotion_status' => 'DONE']
@@ -859,8 +767,55 @@ class AdminPageController extends Controller
 
        
 
-        return back()->withJssone(__('The promotion for '. $ss3. ' was successfully'));
+        return back()->withJssone(__('The promotion for ss3 was successfully'));
        
+    }
+
+    public function timetable()
+    {
+        $sectio = Auth::user()->section;
+        $term = Auth::user()->term;
+        $class = Auth::user()->current_class;
+
+        $info = DB::table('assigns')->get();
+
+        $data = DB::table('time_tables')->get();
+
+        return view('admin.timetable',[
+            'data' => $data,
+            'info' => $info,
+        ]);
+    }
+
+    public function timetableEdit(Request $request)
+    {
+        $class = $request->input('class');
+
+        $first = $request->input('first');
+        $second = $request->input('second');
+        $third = $request->input('third');
+        $four = $request->input('four');
+        $five = $request->input('five');
+        $six = $request->input('six');
+        $seven = $request->input('seven');
+        $eight = $request->input('eight');
+
+        DB::table('time_tables')->where(
+            'class' , $class
+        )->update(
+            [
+                'first_period' => $first,
+                'second_period' => $second,
+                'third_period' => $third,
+                'fourth_period' => $four,
+                'fifth_period' => $five,
+                'sixth_period' => $six,
+                'seventh_period' => $seven,
+                'eight_period' => $eight
+            ]
+            );
+
+        return back()->withStatus(__('Timetable for '.$class.' was successfully updated'));
     }
     
 

@@ -1,6 +1,6 @@
 //payment
 //registration
-result view page [single]
+//result view page [single]
 //fix the database issue regarding section and term
 design the userresult checker view page
 staff registration page
@@ -10,7 +10,7 @@ make all the examSet page look like examSetBoth page
 when the admin update calender it should send email to everystudent tell them about it
 
 calculate the average result and input it on a table
-promotion with average
+promotion with average for student that fail
 make the result single page calculate all the result for a single person and put on a single page
 fit the timezone problem in user.exam.blade.php
 user should be able to see their admission letter and also an email should be sent for to tell them of their admission status and possibly a login link
