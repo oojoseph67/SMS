@@ -60,10 +60,10 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="row">
-                                                            <div class="modal-body">
-                                                                <div class="col-5">
-                                                                    <a type="button" class="btn btn-primary" href="/teacher/courselesson/{{$details->subject_name}}">Add Course Lesson</a>
-                                                                    <a type="button" class="btn btn-primary" href="/teacher/coursematerial/{{$details->subject_name}}">Add Course Material</a>
+                                                            <div class="modal-body col">
+                                                                <div>
+                                                                    <a type="button" class="btn btn-primary" href="/teacher/courselesson/{{$details->subject_name}}/{{$details->classes}}">Add Course Lesson</a>
+                                                                    <a type="button" class="btn btn-primary" href="/teacher/coursematerial/{{$details->subject_name}}/{{$details->classes}}">Add Course Material</a>
                                                                 </div>                        
                                                             </div>
                                                             

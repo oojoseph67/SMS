@@ -1,4 +1,4 @@
-@extends('layouts.teachervertical', ['title' => 'Course Lesson'])
+@extends('layouts.teachervertical', ['title' => 'Course Lesson Note'])
 
 @section('css')
     <!-- Plugins css -->

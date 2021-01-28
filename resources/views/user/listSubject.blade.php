@@ -53,7 +53,7 @@
                                     <td>{{$data->subject_name}}</td>
                                     <td>{{$data->section}} </td>
                                     <td>{{$data->term}} </td>
-                                    <td>{{$data2}}</td>
+                                    <td>{{$data->teacher}}</td>
                             @endforeach
                                     </tr>  
                                                  

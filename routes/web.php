@@ -29,6 +29,8 @@ Route::get('', 'RoutingController@index')->name('index');
 
 Route::get('/unpaid', 'TestPageController@unpaid')->name('unpaid');
 
+Route::view('/reg-teacher', 'auth.registerTeacher')->name('register.teacher');
+
 
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
 	Route::view('/', 'admin.home')->name('admin.home');
@@ -52,8 +54,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 	Route::get('/assign/teacher', 'AdminPageController@teacherAssignView')->name('teacher.assign');
 	Route::get('/view/schoolfees', 'AdminPageController@viewSchoolFees')->name('view.schoolfees');
     Route::get('/view/ptafees', 'AdminPageController@viewPtaFees')->name('view.ptafees');
-	Route::get('/schoolfees/paid', 'AdminPageController@viewPaidSchoolFee')->name('view.paidSchoolFee');
-	Route::get('/schoolfees/unpaid', 'AdminPageController@viewUnpaidSchoolFee')->name('view.unpaidSchoolFee');
+	Route::get('/schoolfees/paid', 'AdminPageController@viewPaidFee')->name('view.paidSchoolFee');
+	Route::get('/schoolfees/unpaid', 'AdminPageController@viewUnpaidFee')->name('view.unpaidSchoolFee');
 	Route::get('/ptafees/paid', 'AdminPageController@viewPaidPtaFee')->name('view.paidPtaFee');
 	Route::get('/ptafees/unpaid', 'AdminPageController@viewUnpaidPtaFee')->name('view.unpaidPtaFee');
 	Route::get('/lessonfees/paid', 'AdminPageController@viewPaidLessonFee')->name('view.paidLessonFee');
@@ -86,15 +88,17 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
 Route::group(['middleware' => ['auth', 'teacher'], 'prefix' => '/teacher'], function (){
 	Route::view('/', 'teacher.home')->name('teacher.home');
+	Route::get('/yourstudent', 'TeacherPageController@yourStudent')->name('your.student');
+	Route::get('/yourstudentprocess', 'TeacherPageController@yourStudentProcess')->name('yourStudent.check');
 	Route::get('/management', 'TeacherPageController@management')->name('course.management');
-	Route::get('/courselesson/{subject_name}', 'TeacherPageController@courseLesson')->name('course.lesson');
-	Route::get('/coursematerial/{subject_name}', 'TeacherPageController@courseMaterial')->name('course.material');
+	Route::get('/courselesson/{subject_name}/{class}', 'TeacherPageController@courseLesson')->name('course.lesson');
+	Route::get('/coursematerial/{subject_name}/{class}', 'TeacherPageController@courseMaterial')->name('course.material');
 	Route::post('/courselesson/post', 'TeacherPageController@courseLessonPost')->name('create.courseLesson');
 	Route::post('/courselesson/update', 'TeacherPageController@courseLessonUpdate')->name('update.courseLesson');
 	Route::post('/coursematerial/post', 'TeacherPageController@courseMaterialPost')->name('create.courseMaterial');
 	Route::get('/course/delete', 'TeacherPageController@courseMaterialDelete')->name('course.delete');
 	Route::get('/lesson/delete', 'TeacherPageController@courseLessonDelete')->name('courselesson.delete');
-	Route::get('/exam', 'TeacherPageController@exam')->name('exam');
+	Route::get('/exam', 'TeacherPageController@exam')->name('exam.teacher');
 	Route::get('/examset/{subject_name}', 'TeacherPageController@examSetViewPage')->name('set.examViewPage');
 	// Route::get('/examset/theory/{subject_name}', 'TeacherPageController@examSetViewPageTheory')->name('set.examViewPageTheory');
 	// Route::get('/examset/both/{subject_name}', 'TeacherPageController@examSetViewPageBoth')->name('set.examViewPageBoth');
@@ -117,15 +121,14 @@ Route::group(['middleware' => ['auth', 'teacher'], 'prefix' => '/teacher'], func
 	Route::view('/profile', 'teacher.profile')->name('teacher.profile');
 	Route::get('/password/update', 'TeacherPageController@profilePasswordUpdate')->name('profile.teacherPasswordUpdate');
 	Route::get('/details/update', 'TeacherPageController@profileDetailsUpdate')->name('profile.teacherDetailsUpdate');
-	Route::get('/assignment', 'TeacherPageController@assignment')->name('assignment');
+	Route::get('/assignment', 'TeacherPageController@assignment')->name('assignment.teacher');
 	Route::get('/assignment/create/view/{subject_name}', 'TeacherPageController@assignmentCreateView')->name('create.assignment');
-	Route::get('/assignment/view/{subject_name}', 'TeacherPageController@assignmentView')->name('view.assignment');
+	Route::get('/assignment/view/{subject_name}/{class}', 'TeacherPageController@assignmentView')->name('view.assignment');
 	Route::get('/assignment/make', 'TeacherPageController@assignmentCreate')->name('assignment.create');
 	Route::post('/create/assignment', 'TeacherPageController@assignmentMake')->name('create.assignment');
 	Route::get('/assignment/delete', 'TeacherPageController@assignmentDelete')->name('assignment.delete');
 	Route::get('/assignment/update', 'TeacherPageController@assignmentEdit')->name('update');
 });
-
 
 Route::group(['middleware' => ['auth', 'student', 'payment_verification'], 'prefix' => '/student'], function(){
     Route::view('/', 'user.index')->name('home');
@@ -135,11 +138,12 @@ Route::group(['middleware' => ['auth', 'student', 'payment_verification'], 'pref
 	Route::get('/details/update', 'StudentPageController@profileDetailsUpdate')->name('profile.detailsUpdate');
 	Route::get('/password/update', 'StudentPageController@profilePasswordUpdate')->name('profile.passwordUpdate');
 	Route::get('/list/subject', 'StudentPageController@listSubject')->name('list.subject');
+	Route::get('/assignment', 'StudentPageController@assignment')->name('assignment.student');
 	Route::get('/payment', 'StudentPageController@payment')->name('payment');
 	Route::get('/invoice/pta/{id}', 'StudentPageController@invoicePta')->name('invoice.pta');
 	Route::get('/invoice/school/{id}', 'StudentPageController@invoiceSchool')->name('invoice.school');
 	Route::get('/invoice/reg/{id}', 'StudentPageController@invoiceReg')->name('invoice.reg');
-	Route::get('/exam', 'StudentPageController@exam')->name('exam');
+	Route::get('/exam', 'StudentPageController@exam')->name('exam.student');
 	Route::get('/exam/start/obj/{subject_name}', 'StudentPageController@examStartObj')->name('exam.startObj');
 	Route::get('/exam/start/theory/{subject_name}', 'StudentPageController@examStartTheory')->name('exam.startTheory');
 	Route::get('/exam/start/both/{subject_name}', 'StudentPageController@examStartBoth')->name('exam.startBoth');

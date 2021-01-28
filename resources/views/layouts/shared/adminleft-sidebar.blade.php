@@ -163,7 +163,7 @@
                 <li>
                     <a href="{{route('result')}}">
                         <i data-feather="message-square"></i>
-                        <span> Result </span>
+                        <span> Result Checker </span>
                     </a>
                 </li>
 
@@ -178,6 +178,13 @@
                     <a href="{{ route('calender') }}">
                         <i data-feather="message-square"></i>
                         <span> Update School Calendar </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="">
+                        <i data-feather="message-square"></i>
+                        <span> Post Notice </span>
                     </a>
                 </li>
 

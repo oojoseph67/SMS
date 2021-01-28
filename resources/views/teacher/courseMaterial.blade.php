@@ -48,7 +48,7 @@
                         </div> <!-- end col-->
                         <div class="col-md-10">
                             <div class="tab-content pt-0">
-                            <!-- CREATE LESSON SECTION START -->
+                            <!-- CREATE LESSON MATERIAL SECTION START -->
                                 <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">            
                                     
                                     @if (session('status'))
@@ -117,12 +117,10 @@
                                     </div> <!-- end card-->
 
                                 </div>
-
-                            <!-- CREATE LESSON SECTION END -->
+                            <!-- CREATE LESSON MATERIAL SECTION END -->
         
 
-                            <!-- VIEW LESSON SECTION START -->  
-
+                            <!-- VIEW LESSON MATERIAL SECTION START -->  
                                 <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                     <div class="table-responsive">                    
                                         <table class="table table-hover" id="basic-datatable">
@@ -270,7 +268,7 @@
                                         </table>
                                     </div>
                                 </div>
-                            <!-- VIEW LESSON SECTION END -->  
+                            <!-- VIEW LESSON MATERIAL SECTION END -->  
 
                             
 

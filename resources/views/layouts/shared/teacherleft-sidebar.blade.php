@@ -36,17 +36,17 @@
                                 <a href="{{ route('course.management') }}">Course Management</a>
                             </li>
                             <li>
-                                <a href="{{ route('assignment') }}">Assignment</a>
+                                <a href="{{ route('assignment.teacher') }}">Assignment</a>
                             </li>
-                            <!-- <li>
-                                <a href="">Unpaid Students</a>
-                            </li> -->
+                            <li>
+                               <a href="{{ route('your.student') }}">Students</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
 
                 <li>
-                    <a href="{{ route('exam') }}">
+                    <a href="{{ route('exam.teacher') }}">
                         <i data-feather="calendar"></i>
                         <span> Exam </span>
                     </a>
@@ -58,78 +58,6 @@
                         <span> Result Calculator </span>
                     </a>
                 </li>
-
-                <!-- <li>
-                    <a href="#sidebarMultilevel" data-toggle="collapse">
-                        <i data-feather="share-2"></i>
-                        <span> Payment </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarMultilevel">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="#sidebarMultilevel2" data-toggle="collapse">
-                                    School Fees <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="sidebarMultilevel2">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="">Paid Students</a>
-                                        </li>
-                                        <li>
-                                            <a href="">Unpaid Students</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="#sidebarMultilevel2" data-toggle="collapse">
-                                    PTA Fees <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="sidebarMultilevel2">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="">Paid Students</a>
-                                        </li>
-                                        <li>
-                                            <a href="">Unpaid Students</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="#sidebarMultilevel2" data-toggle="collapse">
-                                    Lesson Fees <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="sidebarMultilevel2">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="">Paid Students</a>
-                                        </li>
-                                        <li>
-                                            <a href="">Unpaid Students</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="#sidebarMultilevel2" data-toggle="collapse">
-                                    Reg Fees <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="sidebarMultilevel2">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="">Paid Students</a>
-                                        </li>
-                                        <li>
-                                            <a href="">Unpaid Students</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li> -->
             </ul>
 
         </div>

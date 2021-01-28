@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        @include('layouts.shared.title-meta', ['title' => "Register & Signup"])
+        @include('layouts.shared.title-meta', ['title' => "Register Teacher"])
 
         @include('layouts.shared.head-css')
         
@@ -19,7 +19,15 @@
                         <div class="card bg-pattern">
 
                             <div class="card-body p-4">
-                                
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="text-center w-75 m-auto">
                                     <div class="auth-logo">
                                         <a href="" class="logo logo-dark text-center">
@@ -84,61 +92,10 @@
                                     </span>
                                 @endif
                             </div>
+                            
 
-
-                            <div class="form-group{{ $errors->has('class') ? ' has-danger' : '' }}">
-                                    <label for="entry_class"> {{ __('Entry Class')}} </label>
-                                    <select name="class" id="" class="form-control{{ $errors->has('class') ? ' is-invalid' : '' }}" value="{{ old('entry_class') }}">
-                                        <option value="">-Entry Class-</option>
-                                        <option value="JSS1">JSS1</option>
-                                        <option value="JSS2">JSS2</option>
-                                        <option value="JSS3">JSS3</option>
-                                        <option value="SS1">SS1</option>
-                                        <option value="SS2">SS2</option>
-                                        <option value="SS3">SS3</option>
-                                    </select>
-                                @if ($errors->has('class'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('class') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-
-                            <div class="form-group{{ $errors->has('guardian_name') ? ' has-danger' : '' }}">
-                                <label for="guardian_name">{{ __('Guardian Name') }}</label>
-                                <input autocomplete="off" class="form-control{{ $errors->has('guardian_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Guardian Name') }}" type="text" name="guardian_name" value="{{ old('guardian_name') }}"  autofocus>
-                                @if ($errors->has('guardian_name'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('guardian_name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-
-                            <div class="form-group{{ $errors->has('guardian_email') ? ' has-danger' : '' }}">
-                            <label for="guardian_name">{{ __('Guardian Email') }}</label>
-                                <input autocomplete="off" class="form-control{{ $errors->has('guardian_email') ? ' is-invalid' : '' }}" placeholder="{{ __('Guardian Email') }}" type="email" name="guardian_email" value="{{ old('guardian_email') }}" >
-                                @if ($errors->has('guardian_email'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('guardian_email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-
-                            <div class="form-group{{ $errors->has('guardian_phoneNumber') ? ' has-danger' : '' }}">
-                                <label>{{ __('Guardian Phone Number') }}</label>
-                                <input type="text" class="form-control" data-toggle="input-mask" data-mask-format="(000) 000-0000-000" placeholder="(234) 123-4567-890" name="guardian_phoneNumber" value="{{ old('guardian_phoneNumber') }}">
-                                
-                                @if ($errors->has('guardian_phoneNumber'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('guardian_phoneNumber') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-
+                            <input type="hidden" name="role" value="TEACHER">
+                            
 
                             <div class="form-group{{ $errors->has('passport') ? ' has-danger' : '' }}">
                                 <label for="">Upload Passport</label>
@@ -150,23 +107,7 @@
                                 @endif
                             </div>
 
-                         
-                            <div class="form-group{{ $errors->has('manuscript') ? ' has-danger' : '' }}">
-                                <label for="">Upload Manuscript</label>
-                                <input type="file" data-plugins="dropify"  name="manuscript"  value="{{ old('manuscript') }}"/>   
-                                
-                                @if ($errors->has('manuscript'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('manuscript') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-
-
-                            <input type="hidden" name="role" value="STUDENT">
-
-                            
+                                                        
                             <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                                <label for="password">{{ __('Password') }}</label>
                                 <div  class="input-group input-group-merge">

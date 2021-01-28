@@ -225,7 +225,7 @@ class AdminPageController extends Controller
     public function viewPaidFee()
     {
         $status = DB::table('users')->get()->where('school_fees_payment', 'PAID')->where('role', 'STUDENT');
-        return view('admin.viewFee', [
+        return view('admin.viewSchoolFee', [
             'status' => $status
         ]);
     }
@@ -233,7 +233,7 @@ class AdminPageController extends Controller
     public function viewUnpaidFee()
     {
         $status = DB::table('users')->get()->where('school_fees_payment', 'NOTPAID')->where('role', 'STUDENT');
-        return view('admin.viewFeeUnpaid', [
+        return view('admin.viewSchoolFeeUnpaid', [
             'status' => $status
         ]);
     }
@@ -531,8 +531,8 @@ class AdminPageController extends Controller
         $section = $request->input('section');
         $term = $request->input('term');
 
-        $result = DB::table('users')->where(
-            'current_class', $class
+        $result = DB::table('results')->where(
+            'class', $class
         )->where(
             'section' , $section 
         )->where(
@@ -548,13 +548,15 @@ class AdminPageController extends Controller
     public function resultSingle($fullname){
 
         $section = Auth::user()->section;
-        $term = Auth::user()->user;
+        $term = Auth::user()->term;
         
         
         $details = DB::table('results')->where(
            'fullname' , $fullname
         )->where(
             'section' , $section
+        )->where(
+            'term' , $term
         )->get();
 
         return view('admin.resultShow',[
@@ -735,11 +737,11 @@ class AdminPageController extends Controller
     public function promoteSS2(Request $request)
     {
         
-                DB::table('users')->where('current_class', 'SS2')->update(
-                    ['current_class' => 'SS3',
-                     'promotion_class' => 'SS3'
-                    ]
-                );
+        DB::table('users')->where('current_class', 'SS2')->update(
+            ['current_class' => 'SS3',
+                'promotion_class' => 'SS3'
+            ]
+        );
          
 
         DB::table('promotions')->where('class', 'SS2')->update(

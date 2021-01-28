@@ -36,8 +36,6 @@
                         </p>
 
                         <div class="table-responsive">
-
-                        {{$fullname}}
            
                             <table class="table table-hover" id="basic-datatable">
                             <thead>

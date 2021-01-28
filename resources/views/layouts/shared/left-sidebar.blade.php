@@ -39,7 +39,7 @@
                                 <a href="{{route('list.subject')}}">List Of Subjects</a>
                             </li>
                             <li>
-                                <a href="">Assignment</a>
+                                <a href="{{ route('assignment.student') }}">Assignment</a>
                             </li>
                         </ul>
                     </div>
@@ -49,7 +49,7 @@
                 <li>
                     <a href="{{route('payment')}}">
                         <i data-feather="shopping-cart"></i>
-                        <span> Payment </span>
+                        <span> Invoice </span>
                     </a>
                 </li>
 
@@ -61,7 +61,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('exam') }}">
+                    <a href="{{ route('exam.student') }}">
                         <i data-feather="clipboard"></i>
                         <span> Exam </span>
                     </a>

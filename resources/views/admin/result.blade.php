@@ -39,7 +39,7 @@
 
                       
                         <form action="{{ route('check.result') }}">
-
+                            @csrf
                             <div class="form-group">
                                 <label for="">Class</label>
                                 <select name="class" id="" required class="form-control">

@@ -3,11 +3,17 @@
 //result view page [single]
 //fix the database issue regarding section and term
 design the userresult checker view page
-staff registration page
+//staff registration page
 change the login page to use student id instead of email
 add vector image to the admission page and any other important page like the paymentsuccess
 make all the examSet page look like examSetBoth page
 when the admin update calender it should send email to everystudent tell them about it
+make sure when u update a calender the assign table will reset
+
+after accepting or rejecting admission the user/candidate should recieve a email
+after a teacher post a course lesson or material it should show on every student profile dashboard
+
+
 
 calculate the average result and input it on a table
 promotion with average for student that fail

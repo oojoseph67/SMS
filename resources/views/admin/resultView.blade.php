@@ -57,7 +57,7 @@
                                 <tr>
                                     <th scope="row">00{{$result->id}}</th>
                                     <td>{{$result->fullname}}</td>
-                                    <td>{{$result->current_class}}</td>
+                                    <td>{{$result->class}}</td>
                                     <td>{{$result->section}}</td>
                                     <td>{{$result->term}}</td>
                                     <td>                            

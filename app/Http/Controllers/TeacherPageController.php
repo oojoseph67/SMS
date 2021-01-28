@@ -21,6 +21,35 @@ class TeacherPageController extends Controller
         
     }
 
+    public function yourStudent()
+    {
+        $fullname = Auth::user()->fullname;
+
+        $info = DB::table('assigns')->where(
+            'teacher', $fullname
+        )->get();
+
+        return view('teacher.subjectStudent', [
+            'info' => $info
+        ]);
+
+    }
+
+    public function yourStudentProcess(Request $request)
+    {
+        $details = DB::table('users')->where(
+            'role', 'student'
+        )->where(
+            'school_fees_payment', 'PAID'
+        )->where(
+            'reg_payment', 'PAID'
+        )->where(
+            'current_class', $request->input('class')
+        )->get();
+
+        return $details;
+    }
+
     public function management()
     {
         $fullname = Auth::user()->fullname;
@@ -30,10 +59,17 @@ class TeacherPageController extends Controller
         ]);
     }
 
-    public function courseLesson($subject_name)
+    public function courseLesson($subject_name, $class)
     {   
         $fullname = Auth::user()->fullname;
-        $info = DB::table('assigns')->where(['subject_name' => $subject_name], ['teacher' => $fullname])->get();
+        $info = DB::table('assigns')->where(
+            'subject_name' , $subject_name
+        )->where(
+            'classes', $class
+        )->where(
+            'teacher', $fullname
+        )->get();
+
         $details = DB::table('materials')->where(['subject_name' => $subject_name], ['teacher' => $fullname])->distinct()->get();
 
         return view('teacher.courseLesson', [
@@ -56,7 +92,7 @@ class TeacherPageController extends Controller
 
         $course_post->save();
 
-        return back()->withStatus(__('Subject Lesson Created'));
+        return back()->withStatus(__('Subject Lesson'. $request->input('title') .'Created'));
     }
 
     public function courseLessonUpdate(Request $request)
@@ -87,13 +123,19 @@ class TeacherPageController extends Controller
         $id = $request->input('id');
         $subject_name = $request->input('subject_name');
         DB::table('materials')->where('id', $id)->delete();
-        return back()->withLesson(__('Lesson Removed Successfully'));
+        return back()->withLesson(__('Lesson'. $request->input('title'). 'Removed Successfully'));
     }
 
-    public function courseMaterial($subject_name)
+    public function courseMaterial($subject_name, $class)
     {
         $fullname = Auth::user()->fullname;
-        $info = DB::table('assigns')->where(['subject_name' => $subject_name], ['teacher' => $fullname])->get();
+        $info = DB::table('assigns')->where(
+            'subject_name', $subject_name
+        )->where(
+            'classes', $class
+        )->where(
+            'teacher', $fullname
+        )->get();
         $details = DB::table('materials')->where(['subject_name' => $subject_name], ['teacher' => $fullname])->distinct()->get();
         $data = DB::table('materials')->select('lesson_title', 'lesson_material')->distinct()->get();
         $data3 = DB::table('materials')->where(['subject_name' => $subject_name], ['teacher' => $fullname])->distinct()->get();
@@ -560,9 +602,8 @@ class TeacherPageController extends Controller
 
     public function assignment()
     {
-        $user = Auth::user()->fullname;
-        $details = DB::table('assigns')->where('teacher', $user)->get();
-
+        $fullname = Auth::user()->fullname;
+        $details = DB::table('assigns')->where('teacher', $fullname)->get();
         return view('teacher.assignment',[
             'details' => $details
         ]);
@@ -596,16 +637,26 @@ class TeacherPageController extends Controller
         //     'info' => $info,
         //     'subject_name' => $subject_name
         // ]);
-        DB::table('assigns')->where(['subject_name' => $subject_name], ['class' => $class])->update(['assignment_status' => 'CREATED']);
+        DB::table('assigns')->where(['subject_name' => $subject_name], ['class' => $$request->input('class')])->update(['assignment_status' => 'CREATED']);
 
         return route('/assignment/view/{{$subject_name}}');
 
     }
 
-    public function assignmentView($subject_name)
+    public function assignmentView($subject_name, $class)
     {
-        $info = DB::table('assigns')->where('subject_name', $subject_name)->get();
+        $fullname = Auth::user()->fullname;
+
+        $info = DB::table('assigns')->where(
+            'subject_name', $subject_name
+        )->where(
+            'classes', $class
+        )->where(
+            'teacher', $fullname
+        )->get();
+
         $details = DB::table('assignment_questions')->where('subject_name', $subject_name)->get();
+        
         return view('teacher.assignmentView',[
             'details' => $details,
             'info' => $info,

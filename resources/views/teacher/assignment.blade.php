@@ -65,7 +65,7 @@
                                     @else
                                         @if($details->assignment_status == 'CREATED')
                                             <th>Assignment Already Exsist</th>
-                                            <th scope="row"><a type="button" class="btn btn-primary" href="{{ route('view.assignment', ['subject_name' => $details->subject_name]) }}">View</a></th> 
+                                            <th scope="row"><a type="button" class="btn btn-primary" href="/teacher/assignment/view/{{$details->subject_name}}/{{$details->classes}}">View</a></th> 
                                         @endif
                                     @endif
 

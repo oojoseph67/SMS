@@ -62,19 +62,12 @@ class StudentPageController extends Controller
     public function listSubject()
     {
         $class = Auth::user()->current_class;
-        $data3 = DB::table('subjects')->where('class', $class)->get();
-        foreach($data3 as $data3)
-        {
-            $data = DB::table('assigns')->where('classes', $class)->get(['teacher']);
-            $data = DB::table('subjects')->where('class', $class)->get();
-            foreach($data as $data){
-                return view('user.listSubject',[
-                'data' => $data,
-                'data' => $data->teacher
-            ]);
-            }
-            
-        }
+        $data = DB::table('assigns')->where('classes', $class)->get();
+
+        return view('user.listSubject',[
+            'data' => $data,
+        ]);
+        
        
     }
 
@@ -655,6 +648,17 @@ class StudentPageController extends Controller
 
         return view('user.resultCheckerView', [
             'details' => $details
+        ]);
+    }
+
+    public function assignment()
+    {
+        $assignment = DB::table('assignment_questions')->where(
+            'class', Auth::user()->current_class 
+        )->get();
+
+        return view ('user.assignment', [
+            'assignment' => $assignment
         ]);
     }
 

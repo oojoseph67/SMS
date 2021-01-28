@@ -31,7 +31,7 @@ class RegisterController extends Controller
      */
     // protected $redirectTo = RouteServiceProvider::HOME;
     // protected $redirectTo = '/regPage';
-    protected $redirectTo = '/student/';
+    protected $redirectTo = '/choose';
 
     /**
      * Create a new controller instance.
@@ -56,13 +56,14 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'dob' => ['required'],
             'gender' => ['required'],
-            'class' => ['required'],
-            'guardian_name' => ['required', 'string', 'max:255'],
-            'guardian_email' => ['required', 'string', 'email'],
-            'guardian_phoneNumber' => ['required'],
+            'class' => ['nullable| required'],
+            'role' => ['required'],
+            'guardian_name' => ['nullable| required', 'string', 'max:255'],
+            'guardian_email' => ['nullable| required', 'string', 'email'],
+            'guardian_phoneNumber' => ['nullable| required'],
             'password' => ['required', 'string', 'min:5', 'confirmed'],
             'passport' => ['required', 'mimes:jpeg,png,gif,jpg', 'max:2048'],
-            'manuscript' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024']
+            'manuscript' => ['nullable| required', 'mimes:pdf,doc,txt,docx', 'max:10024']
         ]);
     }
 
@@ -78,39 +79,66 @@ class RegisterController extends Controller
         // $randomstring = rand();
         // $rand = "bbia/".$randomstring;
         // $password_secure = Hash::make('password');
+
+        if ($data['role'] == 'STUDENT') {
+            $passport = $data['passport'];
+            $passport_new_name = rand() . "." . $passport->getClientOriginalExtension();
+            $passport->move(public_path("img/passport"), $passport_new_name);
+
+            $manuscript = $data['manuscript'];
+            $manuscript_new_name = rand() . "." . $manuscript->getClientOriginalExtension();
+            $manuscript->move(public_path("img/manuscript"), $manuscript_new_name);
+
+            $guardian_phoneNumber = $data['guardian_phoneNumber'];
+            $class = $data['class'];
+
+            $random_number = intval(rand(0, 9) . rand(0, 9));
+            $random_string = chr(rand(65, 90)) . chr(rand(65, 90)) . chr(rand(65, 90));
+
+            return User::create([
+                'fullname' => $data['fullname'],
+                'email' => $data['email'],
+                'dob' => $data['dob'],
+                'gender' => $data['gender'],
+                'role' => $data['role'],
+                'entry_class' => $class,
+                'current_class' => $class,
+                'guardian_name' => $data['guardian_name'],
+                'guardian_email' => $data['guardian_email'],
+                'guardian_phoneNumber' => ('+') . $guardian_phoneNumber,
+                'password' => Hash::make($data['password']),
+                'student_id' => ('bbia/') . $random_number . $random_string,
+                'profile_pic' => $passport_new_name,
+                'manuscript' => $manuscript_new_name,
+                'reg_payment' => ['NOTPAID'],
+                'school_fees_payment' => ['NOTPAID'],
+                'pta_fees_payment' => ['NOTPAID'],
+            ]);
+        }
+        elseif($data['role'] == 'TEACHER'){
+            $passport = $data['passport'];
+            $passport_new_name = rand() . "." . $passport->getClientOriginalExtension();
+            $passport->move(public_path("img/passport"), $passport_new_name);
+
+            $random_number = intval(rand(0, 9) . rand(0, 9));
+            $random_string = chr(rand(65, 90)) . chr(rand(65, 90)) . chr(rand(65, 90));
+
+            return User::create([
+                'fullname' => $data['fullname'],
+                'email' => $data['email'],
+                'dob' => $data['dob'],
+                'gender' => $data['gender'],
+                'role' => $data['role'],
+                'password' => Hash::make($data['password']),
+                'staff_id' => ('bbia/staff/') . $random_number . $random_string,
+                'profile_pic' => $passport_new_name,
+                'reg_payment' => ['DOES NOT APPLY'],
+                'school_fees_payment' => ['DOES NOT APPLY'],
+                'pta_fees_payment' => ['DOES NOT APPLY'],   
+            ]);
+        }
         
-       $passport = $data['passport'];
-       $passport_new_name = rand().".".$passport->getClientOriginalExtension();
-       $passport->move(public_path("img/passport"), $passport_new_name);
-
-       $manuscript = $data['manuscript'];
-       $manuscript_new_name = rand().".".$manuscript->getClientOriginalExtension();
-       $manuscript->move(public_path("img/manuscript"), $manuscript_new_name);
-
-       $guardian_phoneNumber = $data['guardian_phoneNumber'];
-       $class = $data['class'];
-
-       $random_number = intval(rand(0,9).rand(0,9));
-       $random_string = chr(rand(65,90)).chr(rand(65,90)).chr(rand(65,90));
-
-        return User::create([
-            'fullname' => $data['fullname'],
-            'email' => $data['email'],
-            'dob' => $data['dob'],
-            'gender' => $data['gender'],
-            'entry_class' => $class,
-            'current_class' => $class,
-            'guardian_name' => $data['guardian_name'],
-            'guardian_email' => $data['guardian_email'],
-            'guardian_phoneNumber' => ('+').$guardian_phoneNumber,
-            'password' => Hash::make($data['password']),
-            'student_id' => ('bbia/').$random_number.$random_string,
-            'profile_pic' => $passport_new_name,
-            'manuscript' => $manuscript_new_name,
-            'reg_payment' => ['NOTPAID'],
-            'school_fees_payment' => ['NOTPAID'],       
-            'pta_fees_payment' => ['NOTPAID'],
-        ]);
+       
 
     }
 }

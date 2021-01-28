@@ -29,8 +29,7 @@
                     <img src="{{asset('assets/images/users/user-1.jpg')}}" class="rounded-circle avatar-xl img-thumbnail"
                         alt="profile-image">
 
-                    <h4 class="mb-0">{{auth()->user()->fullname}}</h4>
-                    <p class="text-muted">{{auth()->user()->current_class}}</p>
+                    <h2 class="mb-0">{{auth()->user()->fullname}}</h2>
                     <br><br>
                     <div class="text-left mt-3">
                         <h4 class="font-13 text-uppercase">About Me :</h4>
