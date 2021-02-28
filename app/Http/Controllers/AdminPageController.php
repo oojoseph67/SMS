@@ -297,9 +297,6 @@ class AdminPageController extends Controller
         $guardian_email = $request->input('guardian_email');
         $guardian_phoneNumber = $request->input('guardian_phoneNumber');
 
-        $passport = $request->file('passport');
-        $passport_new_name = rand().".".$passport->getClientOriginalExtension();
-        $passport->move(public_path("img/profile_pic"), $passport_new_name);
 
         $update = User::find($id);
         DB::table('users')->where('id', $id)->update(
